@@ -1,4 +1,3 @@
-
 # 🧩 Resumen del Proyecto: Web para Análisis de Criptomonedas con CoinGecko + Flask
 
 ---
@@ -153,3 +152,16 @@ Si, por ejemplo, 20 usuarios piden 10 monedas no cacheadas en el mismo minuto:
 
 Con estas prácticas, la app puede escalar con seguridad y eficiencia sin romper los límites de la API gratuita.
 
+---
+
+### ⚠️ Limitaciones de la API gratuita de CoinGecko
+
+Aunque la API gratuita de CoinGecko permite hasta **50 requests por minuto**, se ha observado que:
+
+- Algunas respuestas tienen `status 200 OK`, pero **faltan datos clave** como `market_data`, `current_price` o `market_cap`.
+- Esto ocurre de forma intermitente, incluso con monedas muy conocidas como **Ethereum**, **Tether** o **Ripple**.
+- Cuando eso sucede, la app devuelve:  
+  `⚠️ Error: No se encontraron datos de mercado para esta moneda.`
+- Gracias al manejo del backend, **no se cachean errores**, y el usuario puede volver a intentar más tarde.
+
+🧠 Recomendación: evitar hacer múltiples llamados seguidos a monedas distintas para reducir la probabilidad de recibir respuestas incompletas.

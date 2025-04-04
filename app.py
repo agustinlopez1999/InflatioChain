@@ -56,14 +56,16 @@ def get_coin_summary(coin_id):
         return jsonify(response_data)
 
     print(f"🌐 LLAMANDO API para {coin_id}")
-    data = build_cripto_summary(coin_id) #LLAMO A COINGECKO API
-    cache[coin_id] = {"data": data, "time": now}
+    data = build_cripto_summary(coin_id)  # LLAMO A COINGECKO API
+
+    if "error" not in data:
+        cache[coin_id] = {"data": data, "time": now}
+    else:
+        print(f"⚠️ No se cachea {coin_id} por error: {data['error']}")
 
     response_data = data.copy()
     response_data["last_updated"] = now
     return jsonify(response_data)
-
-
 
 @app.route("/")
 def index():
